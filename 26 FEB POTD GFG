@@ -1,0 +1,44 @@
+class Solution {
+    int[] globalVisited;
+    
+    public int findNumberOfGoodComponent(int V, ArrayList<ArrayList<Integer>> adj) {
+        // Code here
+        globalVisited = new int[V+1];
+        
+        int noOfGoodComponent = 0;
+        for(int i=1; i<=V; i++){
+            if(globalVisited[i]==1) continue;
+            
+            int[] localVisited = new int[V+1];
+            int noOfConnectedNode = dfs(adj, localVisited, i);
+            
+            boolean isGoodComponent = true;
+            
+            for(int j=1; j<=V; j++){
+                if(localVisited[j]==1 && adj.get(j).size()+1!=noOfConnectedNode){
+                    isGoodComponent = false;
+                    break;
+                }
+            }
+            
+            if(isGoodComponent) noOfGoodComponent++;
+        }
+        
+        return noOfGoodComponent;
+    }
+    
+    private int dfs(ArrayList<ArrayList<Integer>> g, int[] visisted, int v){
+        visisted[v] = 1;
+        globalVisited[v] = 1;
+        
+        int noOfConnectedNode = 1;
+        
+        for(Integer u : g.get(v)){
+            if(visisted[u]==0){
+                noOfConnectedNode += dfs(g, visisted, u);
+            }
+        }
+        
+        return noOfConnectedNode;
+    }
+}
