@@ -1,0 +1,20 @@
+class Solution {
+    public int maxLevelSum(Node root) {
+        // add code here.
+        Queue<Node> pq=new LinkedList<>();
+        pq.add(root);
+        int answer=Integer.MIN_VALUE;
+        while(!pq.isEmpty()){
+            int ans=0;
+            int size=pq.size();
+            for(int i=0;i<size;i++){
+                Node helper=pq.poll();
+                ans+=helper.data;
+                if(helper.left!=null) pq.add(helper.left);
+                if(helper.right!=null)pq.add(helper.right);
+            }
+            if(ans>answer) answer=ans;
+        }
+        return answer;
+    }
+}
