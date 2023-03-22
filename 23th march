@@ -1,0 +1,31 @@
+class Solution
+{
+    public static int maxDifferenceBST(Node root,int target)
+    {
+        //Please code here
+        int[] ans=new int[1];
+         ans[0]=Integer.MIN_VALUE;
+        help(root,target,0,0,ans,false);
+        if(ans[0] == Integer.MIN_VALUE) return -1;
+        return ans[0];
+        
+    }
+    public static void help(Node root,int target,int roottonode,int nodetoleaf,int[] ans,boolean find){
+        if(root==null)return ;
+        if(root.data==target)find=true;
+        if(find){
+            nodetoleaf+=root.data;
+            help(root.left,target,roottonode,nodetoleaf,ans,find);
+            help(root.right,target,roottonode,nodetoleaf,ans,find);
+            if(root.left == null && root.right == null){
+                nodetoleaf-=target;
+                ans[0]=Math.max(ans[0],roottonode-nodetoleaf);
+            }
+        }else{
+            roottonode+=root.data;
+            if(target>root.data)help(root.right,target,roottonode,nodetoleaf,ans,find);
+            else{
+                help(root.left,target,roottonode,nodetoleaf,ans,find);
+            }
+        }
+    }}
