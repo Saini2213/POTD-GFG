@@ -1,0 +1,44 @@
+class Solution 
+{ 
+    String removeReverse(String s) 
+    { 
+         boolean reverse=true;
+int i,j;
+HashMap<Character,Integer> map=new HashMap<>();
+HashSet<Integer> set=new HashSet<>();
+for( i=0;i<s.length();i++){
+    map.put(s.charAt(i),map.getOrDefault(s.charAt(i),0)+1);
+}
+i=0;
+j=s.length()-1;
+while(i<j){
+    char first=s.charAt(i);
+    char last=s.charAt(j);
+    if(reverse){
+        if(map.get(first)>1){
+            set.add(i);
+            map.put(first,map.get(first)-1);
+        reverse=false;
+            
+        }
+        i++;
+    }else{
+        if(map.get(last)>1){
+            set.add(j);
+            map.put(last,map.get(last)-1);
+        
+        reverse=true;}
+        j--;
+    }
+}
+StringBuilder ans = new StringBuilder();
+        
+        for( i=0; i<s.length(); i++){
+            if(!set.contains(i)) ans.append(s.charAt(i));
+        }
+        if(reverse) return ans.toString();
+        return ans.reverse().toString();
+        
+        
+    }
+} 
