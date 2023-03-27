@@ -1,0 +1,34 @@
+class Solution{
+    
+    static Shop shop;
+    Solution(Shop shop){
+        this.shop = shop;
+    }
+    static long find(int n, long k){
+        long ans=0;
+        int end=n-1;
+        while(end>=0&&k>=1){
+            int start=0;
+            long temp=0,ind=0;
+            while(start<=end){
+                int mid=start+(end-start)/2;
+                long price=shop.get(mid);
+                if(price<=k){
+                    ind=mid;
+                    temp=price;
+                    start=mid+1;
+                }else{
+                    end=mid-1;
+                }
+            }
+            if(temp!=0){
+                ans+=k/temp;
+                k%=temp;}
+                end=(int)ind-1;
+        }
+            return ans;
+        }
+
+    
+
+}
